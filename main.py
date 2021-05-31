@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for
+from backend.issue_ticket import TicketClass
 
 app = Flask(__name__)
 
@@ -17,7 +18,7 @@ def welcome_page():
             return render_template('/tickets/success.html', name=request.form['floatingForename'] + request.form['floatingSurname'])
         else:
             error = "Unsuccessful operation, please try again"
-            
+
     return render_template('/tickets/buy-tickets.html', error=error)
 
 
