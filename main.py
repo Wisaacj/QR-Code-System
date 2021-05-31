@@ -5,7 +5,7 @@ app = Flask(__name__)
 # Route for the ticket purchasing page
 @app.route('/', methods=['GET', 'POST'])
 def welcome_page():
-    error = "Unsuccessful operation, please try again"
+    error = None
 
     if (request.method == "POST"):
         # Creating a new ticket for the user
@@ -15,8 +15,9 @@ def welcome_page():
         if (qr_code != ""):
             # Purchase was successful
             return render_template('/tickets/success.html', name=request.form['floatingForename'] + request.form['floatingSurname'])
-
-    # Purchase was unsucessful
+        else:
+            error = "Unsuccessful operation, please try again"
+            
     return render_template('/tickets/buy-tickets.html', error=error)
 
 
