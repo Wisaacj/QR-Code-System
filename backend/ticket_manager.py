@@ -18,7 +18,7 @@ class TicketClass:
 
     @staticmethod
     def setCheckedIn(tid: str, checkedIn: int =1) -> bool: #Set Check-In status given a valid ticked id; returns true if update was succesful. False on any error.
-        conn = sqlite3.connect("issued_tickets.db")
+        conn = sqlite3.connect("C:\\Users\\Will\Documents\\GitHub\\QR-Code-System\\backend\\issued_tickets.db")
         try:
             with conn:
                 conn.execute("UPDATE Tickets SET CheckedIn=? WHERE TicketID=?",(checkedIn, tid))
@@ -35,7 +35,7 @@ class TicketClass:
         randomID: str = TicketClass.createRandomHash()
         url += randomID
         qr_encoded_url = pyqrcode.create(url)
-        con = sqlite3.connect("issued_tickets.db")
+        con = sqlite3.connect("C:\\Users\\Will\Documents\\GitHub\\QR-Code-System\\backend\\issued_tickets.db")
         try:
             if(TicketClass.getNumSoldTickets() >= TicketClass.MAX_LIMIT_TICKETS):
                 raise Exception("Sold Out!")
@@ -51,7 +51,7 @@ class TicketClass:
 
     @staticmethod
     def verify_ticket(tid: str) -> Union[bool,tuple]: #verifies if a ticket id is valid i.e. present in the DB.
-        conn = sqlite3.connect("issued_tickets.db")
+        conn = sqlite3.connect("C:\\Users\\Will\Documents\\GitHub\\QR-Code-System\\backend\\issued_tickets.db")
         cursor = conn.cursor()
         cursor.execute("SELECT FirstName,LastName,CheckedIn FROM Tickets WHERE TicketID=?", (tid,))
         record: tuple = cursor.fetchone()
@@ -74,7 +74,7 @@ class TicketClass:
 
     @staticmethod
     def getNumSoldTickets() -> int: #returns the number of tickets sold.
-        conn = sqlite3.connect("issued_tickets.db")
+        conn = sqlite3.connect("C:\\Users\\Will\Documents\\GitHub\\QR-Code-System\\backend\\issued_tickets.db")
         cursor = conn.cursor()
         cursor.execute("SELECT COUNT(TicketID) FROM Tickets")
         sold: int = cursor.fetchone()[0]
