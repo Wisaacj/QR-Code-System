@@ -11,6 +11,10 @@ def welcome_page():
     # Getting the number of tickets remaining to be sold
     tickets_remaining = TicketClass.MAX_LIMIT_TICKETS - TicketClass.getNumSoldTickets()
 
+    # Returning an error message if all the tickets have been sold
+    if (tickets_remaining == 0):
+        return render_template('/tickets/buy-tickets.html', error="No tickets remaining, better luck next time", tickets_remaining=tickets_remaining)
+
     if (request.method == "POST"):
         """
         - Use a paypal API to fufil the payment payment
