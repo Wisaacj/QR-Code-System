@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for
-from backend.issue_ticket import TicketClass
+from backend.ticket_manager import TicketClass
 
 app = Flask(__name__)
 
@@ -10,7 +10,7 @@ def welcome_page():
 
     if (request.method == "POST"):
         # Creating a new ticket for the user
-        newTicket = TicketClass(request.form['floatingForename'], request.form['floatingSurname'])
+        newTicket = TicketClass.createQRCode("127.0.0.1:5000/verify?id=", (request.form['floatingForename'], request.form['floatingSurname']))
         # Generating QR code for the ticket
         qr_code = newTicket.createQRCode()
         if (qr_code != ""):
@@ -25,10 +25,10 @@ def welcome_page():
 @app.route('/verify?id=<id>')
 def verification_page(id):
     # Class for checking the identity of the QR code
-    # allow, name = verify_id(id)
-    allow = false
-    name = ""
+    allow, name = TicketClass.verify_ticket(id)
+
     if (allow):
-        return render_template('/verify/verification.html', name=name)
-    else:
-        return render_template('/verify/verification.html', name="Fail")
+        fullname = name[0] + " " + name[1]
+        return render_template('/verify/verification.html', name=fullname)
+
+    return render_template('/verify/verification.html', name="Fail")
