@@ -89,7 +89,6 @@ class TicketClass:
 #Run tests if script is accessed directly.
 if __name__ == "__main__":
 
-    '''
     test_entries = (
     ("Anthony", "Dalamagas"),
     ("John", "Doe"),
@@ -105,7 +104,7 @@ if __name__ == "__main__":
             print()
         else:
             print(f"Failure adding {entry[0]} {entry[1]}")
-    '''
+
     TestID1 = "<Test a valid ID here>"
     print(f"Verifying {TestID1}")
     print(TicketClass.verify_ticket(TestID1))
