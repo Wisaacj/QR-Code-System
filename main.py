@@ -8,6 +8,9 @@ app = Flask(__name__)
 def welcome_page():
     error = None
 
+    # Getting the number of tickets remaining to be sold
+    tickets_remaining = TicketClass.MAX_LIMIT_TICKETS - TicketClass.getNumSoldTickets()
+
     if (request.method == "POST"):
         """
         - Use a paypal API to fufil the payment payment
@@ -19,16 +22,16 @@ def welcome_page():
         if (qr_code != ""):
             # Purchase was successful
             fullname = request.form['floatingForename'] + " " + request.form['floatingSurname']
-            return render_template('/tickets/success.html', name=fullname)
+            return render_template('/tickets/success.html', name=fullname, qr_code=qr_code)
         else:
             error = "Unsuccessful operation, please try again"
 
-    return render_template('/tickets/buy-tickets.html', error=error)
+    return render_template('/tickets/buy-tickets.html', error=error, tickets_remaining=tickets_remaining)
 
 
 @app.route('/verify')
 def verification_page():
-    # Class for checking the identity of the QR code
+    # Verifying the identity of the ticket
     allow, name = TicketClass.verify_ticket(request.args.get('id'))
 
     if (allow):
