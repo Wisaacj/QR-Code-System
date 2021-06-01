@@ -8,7 +8,9 @@ import os
 class TicketClass:
 
     def __init__(self):
-        DB_path: str = f"{os.getcwd()}\issued_tickets.db" 
+        file_path: str = os.path.realpath(__file__)
+        dir_path: str = file_path[0:file_path.rindex('\\')]
+        DB_path: str = f"{dir_path}\issued_tickets.db" 
         self.conn: Connection = sqlite3.connect(DB_path)
         self.cursor: Cursor = self.conn.cursor()
         self.MAX_LIMIT_TICKETS: int = 50 #store max number of tickets.
