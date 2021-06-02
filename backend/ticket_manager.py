@@ -3,10 +3,13 @@ import pyqrcode
 import png
 import uuid
 import sqlite3
+import os
+
 
 class TicketClass:
     MAX_LIMIT_TICKETS: int = 50 #store max number of tickets.
-
+    DB_PATH: str = os.path.join(os.path.dirname(os.path.realpath(__file__)), "issued_tickets.db")
+    
     @staticmethod
     def createRandomHash() -> str:
         return uuid.uuid4().hex
@@ -18,7 +21,7 @@ class TicketClass:
 
     @staticmethod
     def setCheckedIn(tid: str, checkedIn: int =1) -> bool: #Set Check-In status given a valid ticked id; returns true if update was succesful. False on any error.
-        conn = sqlite3.connect("C:\\Users\\Will\Documents\\GitHub\\QR-Code-System\\backend\\issued_tickets.db")
+        conn = sqlite3.connect(TicketClass.DB_PATH)
         try:
             with conn:
                 conn.execute("UPDATE Tickets SET CheckedIn=? WHERE TicketID=?",(checkedIn, tid))
@@ -35,14 +38,14 @@ class TicketClass:
         randomID: str = TicketClass.createRandomHash()
         url += randomID
         qr_encoded_url = pyqrcode.create(url)
-        con = sqlite3.connect("C:\\Users\\Will\Documents\\GitHub\\QR-Code-System\\backend\\issued_tickets.db")
+        con = sqlite3.connect(TicketClass.DB_PATH)
         try:
             if(TicketClass.getNumSoldTickets() >= TicketClass.MAX_LIMIT_TICKETS):
                 raise Exception("Sold Out!")
             with con:
                 con.execute("INSERT INTO Tickets(FirstName, LastName,TicketID) VALUES(?,?,?)",(db_values[0], db_values[1],randomID))
         except Exception as ex:
-            print(f"Smth went wrong! {str(ex)}")
+            print(str(ex))
             return ""
         finally:
             con.close()
@@ -51,7 +54,7 @@ class TicketClass:
 
     @staticmethod
     def verify_ticket(tid: str) -> Union[bool,tuple]: #verifies if a ticket id is valid i.e. present in the DB.
-        conn = sqlite3.connect("C:\\Users\\Will\Documents\\GitHub\\QR-Code-System\\backend\\issued_tickets.db")
+        conn = sqlite3.connect(TicketClass.DB_PATH)
         cursor = conn.cursor()
         cursor.execute("SELECT FirstName,LastName,CheckedIn FROM Tickets WHERE TicketID=?", (tid,))
         record: tuple = cursor.fetchone()
@@ -74,7 +77,7 @@ class TicketClass:
 
     @staticmethod
     def getNumSoldTickets() -> int: #returns the number of tickets sold.
-        conn = sqlite3.connect("C:\\Users\\Will\Documents\\GitHub\\QR-Code-System\\backend\\issued_tickets.db")
+        conn = sqlite3.connect(TicketClass.DB_PATH)
         cursor = conn.cursor()
         cursor.execute("SELECT COUNT(TicketID) FROM Tickets")
         sold: int = cursor.fetchone()[0]
