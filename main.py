@@ -23,7 +23,7 @@ def index():
     # Returning an error message if all the tickets have been sold
     if (tickets_remaining == 0):
         # Need to deactivate the fields and button
-        return render_template('/tickets/buy-tickets.html', error="No tickets remaining, better luck next time", tickets_remaining=tickets_remaining)
+        return render_template('/tickets/buy-tickets.html', error="NoTickets", tickets_remaining=tickets_remaining)
 
     # When there's a POST request, get the data from the form
     if (request.method == "POST"):
