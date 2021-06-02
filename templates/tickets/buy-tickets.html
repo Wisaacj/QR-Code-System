@@ -62,7 +62,7 @@
           </label>
         </div>
 
-        <button class="w-100 btn btn-lg btn-primary" type="submit">Pay now</button>
+        <button class="w-100 btn btn-lg btn-primary" type="submit" id="checkout-button">Checkout</button>
         <p class="mt-5 mb-3 text-muted">Tickets remaining: {{ tickets_remaining }}</p>
         
       </form>
@@ -76,5 +76,12 @@
   </body>
 
   <div class="bg-image" style="background-image: url('https://images.unsplash.com/photo-1494438639946-1ebd1d20bf85?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxleHBsb3JlLWZlZWR8MXx8fGVufDB8fHw%3D&w=1000&q=80'); height: 50vh"></div>
+
+  <script src="https://js.stripe.com/v3/"></script>
+    <script>
+      const checkout_public_key = '{{ checkout_public_key }}';
+      const checkout_session_id = '{{ checkout_session_id }}';
+    </script>
+  <script src="{{ url_for('static', filename='js/stripe-no-ajax.js') }}"></script>
 
 </html>
