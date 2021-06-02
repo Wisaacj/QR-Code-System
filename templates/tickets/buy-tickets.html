@@ -31,16 +31,13 @@
       }
     </style>
 
-    
-    <!-- Custom styles for this template -->
-    <link href="signin.css" rel="stylesheet">
   </head>
 
   <body class="text-center">
     
     <main class="form-signin m-5">
 
-      <h1 class="h3 mb-5 fw-normal"><b>Purchase your entrance pass</b></h1>
+      <h1 class="h3 mb-5 fw-normal"><b>Purchase Your Ticket for Big Bertha --- £5</b></h1>
 
       <form action="" method="POST">
 
@@ -61,12 +58,12 @@
 
         <div class="checkbox mb-3">
           <label>
-            <input type="checkbox" value="remember-me"> Please don't not send my data to facebook
+            <input type="checkbox" value="remember-me"> I solemly swear to arrive absolutely shitfaced
           </label>
         </div>
 
         <button class="w-100 btn btn-lg btn-primary" type="submit">Pay now</button>
-        <p class="mt-5 mb-3 text-muted">Tickets remaining: </p>
+        <p class="mt-5 mb-3 text-muted">Tickets remaining: {{ tickets_remaining }}</p>
         
       </form>
 

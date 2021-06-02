@@ -18,7 +18,7 @@ class TicketClass:
     def setMaxTickets(num: int) -> None: #set the max amount of tickets.
         if num > 0:
             MAX_LIMIT_TICKETS = num
-    
+
     @staticmethod
     def setCheckedIn(tid: str, checkedIn: int =1) -> bool: #Set Check-In status given a valid ticked id; returns true if update was succesful. False on any error.
         conn = sqlite3.connect(TicketClass.DB_PATH)
