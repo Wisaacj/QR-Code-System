@@ -9,6 +9,7 @@ import os
 class TicketClass:
     MAX_LIMIT_TICKETS: int = 50 #store max number of tickets.
     DB_PATH: str = os.path.join(os.path.dirname(os.path.realpath(__file__)), "issued_tickets.db")
+    LAST_SESSION_ID = ""
     
     @staticmethod
     def createRandomHash() -> str:
