@@ -1,0 +1,31 @@
+1.Install the necesary requirements: "pip install simplegmail"
+
+See here for more info : https://github.com/jeremyephron/simplegmail
+
+The only setup required is to download an OAuth 2.0 Client ID file from Google that will authorize your application.
+
+This can be done at: https://console.developers.google.com/apis/credentials. For those who haven't created a credential for Google's API, after clicking the link above (and logging in to the appropriate account),
+
+    Select/create the project that this authentication is for (if creating a new project make sure to configure the OAuth consent screen; you only need to set an Application name)
+
+    Click on the "Dashboard" tab, then "Enable APIs and Services". Search for Gmail and enable.
+
+    Click on the Credentials tab, then "Create Credentials" > "OAuth client ID".
+
+    Select "Desktop Application" when asked what kind of application this will be and give it a memorable name.
+
+    Back on the credentials screen, click the download icon next to the credential you just created to download it as a JSON object.
+
+    Save this file as "client_secret.json" and place it in the backend directory. (The Gmail class takes in an argument for the name of this file if you choose to name it otherwise.)
+
+
+3. Open a terminal window in the backend dir and do : "python simplegmail_setup.py --noauth_local_webserver".
+
+It will ask you to open up your browser to a specific url and get a verification code. Follow the instructions on screen until you get the verification code.
+
+4. Paste it into the terminal. You should see a "gmail_token.json" file appear in the backend directory. At this point, kill the simplegmail_setup.py
+
+
+5. You now have everything necessary to try "simplegmail_wrapper.py" which is the PoC. Edit the "<youremail>@gmail.com" and "<receiver_email>@gmail.com" in "simplegmail_wrapper.py", save and run!
+
+
