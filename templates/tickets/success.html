@@ -21,11 +21,15 @@
         <!-- Header-->
         <header class="masthead d-flex align-items-center">
             <div class="container px-4 px-lg-5 text-center">
-                <h1 class="mb-1">{{ name }}</h1>
-                <h3 class="mb-2">This QR code is your ticket to Big Bertha</h3>
-                <h4 class="mb-4">We have also emailed you your code</h3>
-                <img src="{{ qr_code }}">
-                <!-- Include RESEND EMAIL button-->
+                {% if refresh %}
+                    <h1 class="mb-4">Your ticket has been emailed to you :)</h3>
+                {% else %}
+                    <h1 class="mb-1">{{ name }}</h1>
+                    <h3 class="mb-2">This QR code is your ticket to Big Bertha</h3>
+                    <h4 class="mb-4">We have also emailed you your code</h3>
+                    <img src="{{ qr_code }}">
+                    <!-- Include RESEND EMAIL button-->
+                {% endif %}
             </div>
         </header>
         <!-- Bootstrap core JS-->
