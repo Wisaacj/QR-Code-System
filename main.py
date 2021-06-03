@@ -16,17 +16,12 @@ stripe.api_key = app.config['STRIPE_SECRET_KEY']
 @app.route('/', methods=['GET', 'POST'])
 def index():
     # Getting the number of tickets remaining to be sold
-    tickets_remaining = TicketClass.MAX_LIMIT_TICKETS - TicketClass.getNumSoldTickets()
+    # tickets_remaining = TicketClass.MAX_LIMIT_TICKETS - TicketClass.getNumSoldTickets()
+    tickets_remaining = 0
 
     # Returning an error message if all the tickets have been sold
     if (tickets_remaining == 0):
         return render_template('/tickets/buy-tickets.html', error="NoTickets", tickets_remaining=tickets_remaining)
-
-    # When there's a POST request, get the data from the form
-    if (request.method == "POST"):
-        forename = request.form['floatingForename']
-        surname = request.form['floatingSurname']
-        email = request.form['floatingInput']
 
     session = stripe.checkout.Session.create(
         payment_method_types=['card'],
