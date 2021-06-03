@@ -34,47 +34,62 @@
   </head>
 
   <body class="text-center">
+
+    {% if error != "NoTickets" %}
     
-    <main class="form-signin m-5">
+      <main class="form-signin m-5">
 
-      <h1 class="h3 mb-5 fw-normal"><b>Purchase Your Ticket for Big Bertha --- £5</b></h1>
+        <h1 class="h3 mb-5 fw-normal"><b>Purchase Your Ticket for Big Bertha for £5</b></h1>
 
-      <form action="" method="POST">
+        <form action="" method="POST">
 
-        <div class="form-floating mt-3 mb-3">
-          <input type="text" class="form-control" id="floatingForename" placeholder="Forename" name="floatingForename" value="{{ request.form.floatingForename }}">
-          <label for="floatingForename">Forename</label>
-        </div>
+          <div class="form-floating mt-3 mb-3">
+            <input type="text" class="form-control" id="floatingForename" placeholder="Forename" name="floatingForename" value="{{ request.form.floatingForename }}">
+            <label for="floatingForename">Forename</label>
+          </div>
 
-        <div class="form-floating mt-3 mb-3">
-          <input type="text" class="form-control" id="floatingSurname" placeholder="Surname" name="floatingSurname" value="{{ request.form.floatingSurname }}">
-          <label for="floatingSurname">Surname</label>
-        </div>
+          <div class="form-floating mt-3 mb-3">
+            <input type="text" class="form-control" id="floatingSurname" placeholder="Surname" name="floatingSurname" value="{{ request.form.floatingSurname }}">
+            <label for="floatingSurname">Surname</label>
+          </div>
 
-        <div class="form-floating mt-3 mb-3">
-          <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com" name="floatingInput" value="{{ request.form.floatingInput }}">
-          <label for="floatingInput">Email</label>
-        </div>
+          <div class="form-floating mt-3 mb-3">
+            <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com" name="floatingInput" value="{{ request.form.floatingInput }}">
+            <label for="floatingInput">Email</label>
+          </div>
 
-        <div class="checkbox mb-3">
-          <label>
-            <input type="checkbox" value="remember-me"> I solemly swear to arrive absolutely shitfaced
-          </label>
-        </div>
+          <div class="checkbox mb-3">
+            <label>
+              <input type="checkbox" value="remember-me"> I solemly swear to arrive absolutely shitfaced
+            </label>
+          </div>
 
-        <button class="w-100 btn btn-lg btn-primary" type="submit">Pay now</button>
-        <p class="mt-5 mb-3 text-muted">Tickets remaining: {{ tickets_remaining }}</p>
-        
-      </form>
+          <button class="w-100 btn btn-lg btn-primary" type="submit" id="checkout-button">Checkout</button>
+          <p class="mt-5 mb-3 text-muted">Tickets remaining: {{ tickets_remaining }}</p>
+          
+        </form>
 
-      {% if error %}
-        <p class="error"><strong>Error:</strong> {{ error }}</p>
-      {% endif %}
+        {% if error %}
+          <p class="error"><strong>Error:</strong> {{ error }}</p>
+        {% endif %}
 
-    </main>
+      </main>
+
+    {% else %}
+
+      <h1 class="h1 m-5 fw-normal"><b>No Big Bertha for you, we're afraid that tickets are all sold out :(</b></h1>
+
+    {% endif %}
     
   </body>
 
   <div class="bg-image" style="background-image: url('https://images.unsplash.com/photo-1494438639946-1ebd1d20bf85?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxleHBsb3JlLWZlZWR8MXx8fGVufDB8fHw%3D&w=1000&q=80'); height: 50vh"></div>
+
+  <script src="https://js.stripe.com/v3/"></script>
+    <script>
+      const checkout_public_key = '{{ checkout_public_key }}';
+      const checkout_session_id = '{{ checkout_session_id }}';
+    </script>
+  <script src="{{ url_for('static', filename='js/stripe-no-ajax.js') }}"></script>
 
 </html>
