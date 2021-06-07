@@ -49,6 +49,7 @@ def success():
     # Parsing the customer's information
     fullname = customer.name
     customer_email = customer.email
+    
     if (len(fullname.split(" ")) > 1):
         forename, surname = fullname.split(" ")[0], fullname.split(" ")[1]
     else:
@@ -62,8 +63,10 @@ def success():
     qr_code = TicketClass.createQRCode("127.0.0.1:5000/verify?id=", (forename, surname))
     # Setting the last session id to the current id
     TicketClass.LAST_SESSION_ID = request.args.get('session_id')
-    # Sending an email to the customer's address
+
+    # Creating a confirmation email containing the customer's ticket
     email = GreetingEmail(forename, surname, customer_email, qr_code[len("data:image/png;base64,")-1:])
+    # Sending the confirmation email
     email.send()
     
     return render_template('/tickets/success.html', name=fullname, qr_code=qr_code)
