@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for, session
 from backend.ticket_manager import TicketClass
+from backend.simplegmail_wrapper import GreetingEmail
 
 import stripe
 
@@ -45,8 +46,9 @@ def success():
     session_info = stripe.checkout.Session.retrieve(request.args.get('session_id'))
     customer = stripe.Customer.retrieve(session_info.customer)
 
-    # Parsing the customer's name
+    # Parsing the customer's information
     fullname = customer.name
+    customer_email = customer.email
     if (len(fullname.split(" ")) > 1):
         forename, surname = fullname.split(" ")[0], fullname.split(" ")[1]
     else:
@@ -60,6 +62,9 @@ def success():
     qr_code = TicketClass.createQRCode("127.0.0.1:5000/verify?id=", (forename, surname))
     # Setting the last session id to the current id
     TicketClass.LAST_SESSION_ID = request.args.get('session_id')
+    # Sending an email to the customer's address
+    email = GreetingEmail(forename, surname, customer_email, qr_code[len("data:image/png;base64,")-1:])
+    email.send()
     
     return render_template('/tickets/success.html', name=fullname, qr_code=qr_code)
 
@@ -70,7 +75,7 @@ def verification_page():
 
     if (allow):
         fullname = name[0] + " " + name[1]
-        # Setting the ticket to 'checked-in'
+        # Updating the ticket to be 'checked-in'
         TicketClass.setCheckedIn(request.args.get('id'))
         return render_template('/verify/verification.html', name=fullname)
 
