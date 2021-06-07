@@ -1,7 +1,45 @@
 <body>
     {% if name == "Fail" %}
-        <p class="error"><strong>Unable to verify: </strong>Gotcha bitch, no fiesta for you</p>
+        <p class="error"></p>
     {% else %}
-        <p class="success"><strong>Verified: </strong> {{ name }}</p>
+        <p class="success"></p>
     {% endif %}
 </body>
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>Ticket Confirmation</title>
+        <!-- Favicon-->
+        <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='assets/favicon.ico') }}" />
+        <!-- Font Awesome icons (free version)-->
+        <script src="https://use.fontawesome.com/releases/v5.15.3/js/all.js" crossorigin="anonymous"></script>
+        <!-- Simple line icons-->
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/simple-line-icons/2.5.5/css/simple-line-icons.min.css" rel="stylesheet" />
+        <!-- Google fonts-->
+        <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css" />
+        <!-- Core theme CSS (includes Bootstrap)-->
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/verification.css') }}"/>
+    </head>
+    <body id="page-top">
+        <!-- Header-->
+        <header class="masthead d-flex align-items-center">
+            <div class="container px-4 px-lg-5 text-center">
+                {% if name == "Fail" %}
+                    <h1 class="mb-4">Unable to verify</h1>
+                    <h3 class="m-4">Gotcha bitch, no fiesta for you</h3>
+                {% else %}
+                    <h1 class="mb-1"><strong>Verified: </strong> {{ name }}</h1>
+                {% endif %}
+            </div>
+        </header>
+        <!-- Bootstrap core JS-->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- Core theme JS-->
+        <script src="{{ url_for('static', filename='js/success.js') }}"></script>
+    </body>
+</html>
