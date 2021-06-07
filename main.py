@@ -70,6 +70,8 @@ def verification_page():
 
     if (allow):
         fullname = name[0] + " " + name[1]
+        # Setting the ticket to 'checked-in'
+        TicketClass.setCheckedIn(request.args.get('id'))
         return render_template('/verify/verification.html', name=fullname)
 
     return render_template('/verify/verification.html', name="Fail")
