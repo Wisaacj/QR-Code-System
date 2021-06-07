@@ -1,4 +1,5 @@
 from simplegmail import Gmail
+
 gmail = Gmail()
 
 # Unread messages in your inbox
